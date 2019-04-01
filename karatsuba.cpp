@@ -7,9 +7,9 @@ int multiply(int x, int y);
 int ipow(int base, int exp);
 
 int main(){
-  int x = 12345;
-  int y = 678;
-  multiply(x, y);
+  int x = 2345;
+  int y = 7845;
+  cout << multiply(x, y);
 }
 
 int multiply(int x, int y){
@@ -23,17 +23,12 @@ int multiply(int x, int y){
   if(x / 10 == 0 || y / 10 == 0){
     return x * y;
   }
-  // else{
-  //   int first = multiply(a, c);
-  //   int second = multiply(b, d);
-  //   int third = multiply(a + b, c + d) - first - second;
-  //   return
-  // }
-  cout << "A: " << a << endl;
-  cout << "B: " << b << endl;
-  cout << "C: " << c << endl;
-  cout << "D: " << d << endl;
-  return 0;
+  else{
+    int first = multiply(a, c);
+    int second = multiply(b, d);
+    int third = multiply(a + b, c + d) - first - second;
+    return ipow(10, max_count) * first + ipow(10, max_count / 2) * third + second;
+  }
 }
 
 int digit_count(int input_int){
