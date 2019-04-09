@@ -9,14 +9,14 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
-    private int[] results;
+    private double[] results;
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0) {
             throw new java.lang.IllegalArgumentException(
                     "N must be greater than 0 and trials must be greater than 0");
         }
-        results = new int[n];
+        results = new double[trials];
         for (int i = 0; i < trials; i++) {
             Percolation trial = new Percolation(n);
             boolean percolates = trial.percolates();
@@ -28,7 +28,7 @@ public class PercolationStats {
                     percolates = trial.percolates();
                 }
             }
-            results[i] = trial.numberOfOpenSites();
+            results[i] = (double) trial.numberOfOpenSites() / (double) (n * n);
         }
     }
 
@@ -53,8 +53,6 @@ public class PercolationStats {
     }
 
     public static void main(String[] args) {
-        System.out.println(Integer.parseInt(args[0]));
-        System.out.println(Integer.parseInt(args[1]));
         PercolationStats simulation = new PercolationStats(Integer.parseInt(args[0]),
                                                            Integer.parseInt(args[1]));
         System.out.println("mean                    = " + simulation.mean());

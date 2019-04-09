@@ -21,10 +21,10 @@ public class Percolation {
         materials = new int[n][n];
         int uniqueId = 0;
         nSize = n;
-        for (int y = 0; y < n; y++) {
-            for (int x = 0; x < n; x++) {
-                materials[x][y] = uniqueId;
-                isOpen[x][y] = false;
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                materials[row][col] = uniqueId;
+                isOpen[row][col] = false;
                 uniqueId += 1;
             }
         }
@@ -49,20 +49,20 @@ public class Percolation {
         int realRow = row - 1;
         int realCol = col - 1;
 
-        if (!isOpen[realCol][realRow]) {
-            isOpen[realCol][realRow] = true;
+        if (!isOpen[realRow][realCol]) {
+            isOpen[realRow][realCol] = true;
             openSites += 1;
-            if (isOpen[realCol][realRow + 1] && row != nSize) {
-                unionData.union(materials[realCol][realRow + 1], materials[realCol][realRow]);
+            if (realCol < (nSize - 1) && isOpen[realRow][realCol + 1]) {
+                unionData.union(materials[realRow][realCol + 1], materials[realRow][realCol]);
             }
-            if (isOpen[realCol + 1][realRow] && col != nSize) {
-                unionData.union(materials[realCol + 1][realRow], materials[realCol][realRow]);
+            if (realRow < (nSize - 1) && isOpen[realRow + 1][realCol]) {
+                unionData.union(materials[realRow + 1][realCol], materials[realRow][realCol]);
             }
-            if (isOpen[realCol][realRow - 1] && row > 1) {
-                unionData.union(materials[realCol][realRow - 1], materials[realCol][realRow]);
+            if (realCol > 0 && isOpen[realRow][realCol - 1]) {
+                unionData.union(materials[realRow][realCol - 1], materials[realRow][realCol]);
             }
-            if (isOpen[realCol - 1][realRow] && col > 1) {
-                unionData.union(materials[realCol - 1][realRow], materials[realCol][realRow]);
+            if (realRow > 0 && isOpen[realRow - 1][realCol]) {
+                unionData.union(materials[realRow - 1][realCol], materials[realRow][realCol]);
             }
         }
 
@@ -72,14 +72,14 @@ public class Percolation {
         if ((row > nSize + 1 || row < 1) || (col > nSize + 1 || col < 1)) {
             throw new java.lang.IllegalArgumentException("Cols or Rows out of range");
         }
-        return isOpen[col - 1][row - 1];
+        return isOpen[row - 1][col - 1];
     }
 
     public boolean isFull(int row, int col) {
         if ((row > nSize + 1 || row < 1) || (col > nSize + 1 || col < 1)) {
             throw new java.lang.IllegalArgumentException("Cols or Rows out of range");
         }
-        return unionData.connected(nSize * nSize, materials[col - 1][row - 1]);
+        return unionData.connected(nSize * nSize, materials[row - 1][col - 1]);
     }
 
     public int numberOfOpenSites() {
@@ -89,7 +89,8 @@ public class Percolation {
     public boolean percolates() {
         return unionData.connected(nSize * nSize, (nSize * nSize) + 1);
     }
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        
     }
 }
