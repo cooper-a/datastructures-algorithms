@@ -72,14 +72,19 @@ public class Percolation {
         if ((row > nSize + 1 || row < 1) || (col > nSize + 1 || col < 1)) {
             throw new java.lang.IllegalArgumentException("Cols or Rows out of range");
         }
-        return isOpen[row - 1][col - 1];
+        else {
+            return isOpen[row - 1][col - 1];
+        }
     }
 
     public boolean isFull(int row, int col) {
         if ((row > nSize + 1 || row < 1) || (col > nSize + 1 || col < 1)) {
             throw new java.lang.IllegalArgumentException("Cols or Rows out of range");
         }
-        return unionData.connected(nSize * nSize, materials[row - 1][col - 1]);
+        else {
+            return unionData.connected(nSize * nSize, materials[row - 1][col - 1]) && isOpen(row,
+                                                                                             col);
+        }
     }
 
     public int numberOfOpenSites() {
@@ -91,6 +96,6 @@ public class Percolation {
     }
 
     public static void main(String[] args) {
-        
+
     }
 }

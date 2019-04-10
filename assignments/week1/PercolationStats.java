@@ -10,6 +10,9 @@ import edu.princeton.cs.algs4.StdStats;
 public class PercolationStats {
 
     private double[] results;
+    private double mean;
+    private double standarddev;
+    private double ratio = 1.96;
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0) {
@@ -30,6 +33,9 @@ public class PercolationStats {
             }
             results[i] = (double) trial.numberOfOpenSites() / (double) (n * n);
         }
+        mean = mean();
+        standarddev = stddev();
+
     }
 
     public double mean() {
@@ -41,15 +47,11 @@ public class PercolationStats {
     }
 
     public double confidenceLo() {
-        double mean = mean();
-        double standardev = stddev();
-        return mean - (1.96 * standardev / Math.sqrt(results.length));
+        return mean - (ratio * standarddev / Math.sqrt(results.length));
     }
 
     public double confidenceHi() {
-        double mean = mean();
-        double standardev = stddev();
-        return mean + (1.96 * standardev / Math.sqrt(results.length));
+        return mean + (ratio * standarddev / Math.sqrt(results.length));
     }
 
     public static void main(String[] args) {
